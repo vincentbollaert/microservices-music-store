@@ -10,10 +10,9 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 WORKDIR /opt
-ENV PATH=/opt/node_modules/.bin:$PATH
 COPY package*.json ./
 EXPOSE 3000
 RUN npm install
 COPY . .
 
-CMD ["ts-node-dev", "src/index.ts"]
+CMD ["npm", "start"]
