@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:slim
 LABEL org.opencontainers.image.authors=vincentbollaert@gmail.com
 LABEL org.opencontainers.image.title="microservices playground - music store"
 LABEL org.opencontainers.image.licenses=MIT
@@ -16,4 +16,4 @@ EXPOSE 3000
 RUN npm install
 COPY . .
 
-CMD ts-node-dev src/index.ts
+CMD ["ts-node-dev", "src/index.ts"]
