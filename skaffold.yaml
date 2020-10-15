@@ -5,10 +5,10 @@ deploy:
     manifests:
       - ./_infra/k8s/*
 build:
-  local:
-    push: false
+  googleCloudBuild:
+    projectId: microservices-music-store
   artifacts:
-    - image: vincentza/music-store-auth
+    - image: us.gcr.io/microservices-music-store/auth
       context: auth
       docker:
         dockerfile: Dockerfile
