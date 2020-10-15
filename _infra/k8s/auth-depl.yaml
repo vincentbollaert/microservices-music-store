@@ -13,8 +13,8 @@ spec:
         app: auth
     spec:
       containers:
-      - name: auth
-        image: vincentza/music-store-auth
+        - name: auth
+          image: us.gcr.io/microservices-music-store/auth
 
 ---
 
