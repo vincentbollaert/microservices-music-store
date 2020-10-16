@@ -10,8 +10,11 @@ Router.post('/api/users/signup', [
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).send(errors.array());
+    throw new Error('invalid email or pw')
+    // return res.status(400).send(errors.array());
   }
+
+  throw new Error('cannot connect to db')
 
   const { email, password } = req.body
   res.send(`creating user ${email}, ${password}`)
