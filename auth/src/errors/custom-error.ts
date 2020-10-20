@@ -1,8 +1,8 @@
 export abstract class CustomError extends Error {
   abstract statusCode: number
 
-  constructor() {
-    super()
+  constructor(message: string) {
+    super(message) // this is just for server logging, for 'throw new Error('something')
     
     // only necessary because we are extending a built in class
     Object.setPrototypeOf(this, CustomError.prototype)
