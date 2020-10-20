@@ -1,6 +1,8 @@
 // this is mostly for demonstration purposes -- defining errorMessage up top and the use of a class
 
-export class DatabaseConnectionError extends Error {
+import { CustomError } from "./custom-error"
+
+export class DatabaseConnectionError extends CustomError {
   statusCode = 500
   errorMessage = 'could not connect to db'
 
@@ -11,7 +13,7 @@ export class DatabaseConnectionError extends Error {
     Object.setPrototypeOf(this, DatabaseConnectionError.prototype)
   }
 
-  serializeErrorr() {
+  serializeErrors() {
     return [
       {
         message: this.errorMessage

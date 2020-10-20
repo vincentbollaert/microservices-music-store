@@ -9,7 +9,7 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   }
   if (err instanceof DatabaseConnectionError) {
     console.log('database error')
-    return res.status(err.statusCode).send({ errors: err.serializeErrorr() })
+    return res.status(err.statusCode).send({ errors: err.serializeErrors() })
   }
 
   const errorFallbackFormatted = [{ message: 'something went wrong' }]
