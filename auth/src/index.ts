@@ -1,4 +1,5 @@
 import express from 'express'
+import 'express-async-errors'
 import { json } from 'body-parser'
 
 import {
@@ -18,7 +19,7 @@ app.use(signoutRouter)
 app.use(signupRouter)
 
 // capture error for all methods on undefined routes
-app.all('*', () => {
+app.all('*', async () => {
   throw new NotFoundError()
 })
 
