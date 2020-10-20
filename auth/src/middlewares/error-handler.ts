@@ -4,34 +4,14 @@ import { RequestValidationError } from '../errors/request-validation-error'
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof RequestValidationError) {
-    const errorsFormatted = {
-      errors: err.errors.map(x => ({
-        message: x.msg,
-        field: x.param,
-      }))
-    }
-
     console.log('validation error')
-    return res.status(400).send(errorsFormatted)
+    return res.status(err.statusCode).send({ errors: err.serializeErrors() })
   }
   if (err instanceof DatabaseConnectionError) {
-    const errorsFormatted = {
-      errors: [
-        {
-          message: err.errorMessage
-        }
-      ]
-    }
     console.log('database error')
-    return res.status(500).send(errorsFormatted)
+    return res.status(err.statusCode).send({ errors: err.serializeErrorr() })
   }
 
-  const errorFallbackFormatted = {
-    errors: [
-      {
-        message: 'something went wrong'
-      }
-    ]
-  }
-  res.status(400).send(errorFallbackFormatted)
+  const errorFallbackFormatted = [{ message: 'something went wrong' }]
+  res.status(400).send({ errors: errorFallbackFormatted })
 }
