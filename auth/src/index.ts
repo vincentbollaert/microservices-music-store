@@ -1,5 +1,6 @@
 import express from 'express'
 import 'express-async-errors'
+import mongoose from 'mongoose'
 import { json } from 'body-parser'
 
 import {
@@ -25,6 +26,20 @@ app.all('*', async () => {
 
 app.use(errorHandler)
 
-app.listen(3000, () => {
-  console.log('listening on port 300000')
-})
+const startApp = async () => {
+  try {
+    await mongoose.connect('mongodb://auth-mongo-serv:27017/auth', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+
+  app.listen(3000, () => {
+    console.log('listening on port 300000')
+  })
+}
+
+startApp()
