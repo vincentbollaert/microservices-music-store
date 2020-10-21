@@ -1,10 +1,13 @@
 import express, { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
+import { BadRequestError } from '../errors/bad-request-error'
 import { RequestValidationError } from '../errors/request-validation-error'
 import { UserModel } from '../models/users'
 
 const Router = express.Router()
 
+// NOTES
+// this needs to be refactored to MVC
 Router.post('/api/users/signup', [
   body('email')
     .isEmail()
@@ -24,8 +27,7 @@ Router.post('/api/users/signup', [
   const existingUser = await UserModel.findOne({ email })
 
   if (existingUser) {
-    console.log('email already in use')
-    return res.send({})
+    throw new BadRequestError('email already in use')
   }
 
   const user = UserModel.build({ email, password })
