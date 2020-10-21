@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import { preProcessFile } from 'typescript'
+import { Password } from '../services/password'
 
 interface IUser {
   email: string;
@@ -22,6 +24,17 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: [true, 'must have password']
   }
+})
+
+// with mongoose preProcessFile, you need to call done after await due to older implementations
+// should this not be 'next'? it's a middleware fn no?
+userSchema.pre('save', async function(done) {
+  // password is modified if new (create user) or updated (edit user password)
+  if (this.isModified('password')) {
+    const hashedPassword = await Password.toHash(this.get('password'))
+    this.set('password', hashedPassword)
+  }
+  done()
 })
 
 // NOTES
