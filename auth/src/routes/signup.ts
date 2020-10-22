@@ -24,9 +24,7 @@ Router.post('/api/users/signup', [
   }
 
   const { email, password } = req.body
-  const existingUser = await UserModel.findOne({ email })
-
-  if (existingUser) {
+  if (await UserModel.findOne({ email })) {
     throw new BadRequestError('email already in use')
   }
 
