@@ -24,6 +24,16 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: [true, 'must have password']
   }
+}, {
+  // let's you map the response
+  toJSON: {
+    transform(doc, ret) {
+      ret.id = ret._id
+      delete ret._id
+      delete ret.password
+      delete ret.__v
+    }
+  }
 })
 
 // with mongoose preProcessFile, you need to call done after await due to older implementations
