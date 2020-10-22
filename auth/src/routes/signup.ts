@@ -32,7 +32,7 @@ Router.post('/api/users/signup', [
   const user = UserModel.build({ email, password })
   await user.save()
 
-  // create jwt and save to cookie (session added to req with cookie-session lib)
+  // create jwt and save to cookie base64 encoded (session added to req with cookie-session lib)
   // saving id and email for easy lookup once decrypted
   // req.session possibly null so TS complains, instead of dot notation just set it as obj
   const userJwt = jwt.sign({

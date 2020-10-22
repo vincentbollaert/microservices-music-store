@@ -15,6 +15,13 @@ spec:
       containers:
         - name: auth
           image: us.gcr.io/microservices-music-store/auth
+          env:
+            # the name to reference in the auth app, not the secret file key name
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: JWT_KEY
 
 ---
 
