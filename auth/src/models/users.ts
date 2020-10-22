@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { preProcessFile } from 'typescript'
 import { Password } from '../services/password'
 
 interface IUser {
@@ -26,6 +25,7 @@ const userSchema = new mongoose.Schema<IUser>({
   }
 }, {
   // let's you map the response
+  // should be moved to V layer
   toJSON: {
     transform(doc, ret) {
       ret.id = ret._id
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema<IUser>({
   }
 })
 
-// with mongoose preProcessFile, you need to call done after await due to older implementations
+// with mongoose, you need to call done after await due to older implementations
 // should this not be 'next'? it's a middleware fn no?
 userSchema.pre('save', async function(done) {
   // password is modified if new (create user) or updated (edit user password)
