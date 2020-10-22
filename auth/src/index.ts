@@ -18,7 +18,7 @@ app.set('trust proxy', true) // https traffic proxied through nginx - force expr
 app.use(json())
 app.use(cookieSession({
   signed: false, // do not encrypt - will be saving JWT which cannot be tampered with and is ez to impl in other langs
-  secure: true, // only send cookie over https
+  secure: true, // only send cookie over https for security reasons
 }))
 app.use(currentUserRouter)
 app.use(signinRouter)
