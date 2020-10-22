@@ -1,6 +1,7 @@
 import express from 'express'
 import 'express-async-errors'
 import mongoose from 'mongoose'
+import cookieSession from 'cookie-session'
 import { json } from 'body-parser'
 
 import {
@@ -13,7 +14,12 @@ import { errorHandler } from './middlewares/error-handler'
 import { NotFoundError } from './errors/not-found-error'
 
 const app = express()
+app.set('trust proxy', true) // https traffic proxied through nginx - force express to trust this traffic
 app.use(json())
+app.use(cookieSession({
+  signed: false, // do not encrypt - will be saving JWT which cannot be tampered with and is ez to impl in other langs
+  secure: true, // only send cookie over https
+}))
 app.use(currentUserRouter)
 app.use(signinRouter)
 app.use(signoutRouter)
