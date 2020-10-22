@@ -38,7 +38,7 @@ Router.post('/api/users/signup', [
   const userJwt = jwt.sign({
     id: user.id,
     email: user.email,
-  }, 'someprivatekey')
+  }, process.env.JWT_KEY!) // ! tells TS that we know that JWT_KEY is defined (check in start fn)
 
   req.session = {
     jwt: userJwt
