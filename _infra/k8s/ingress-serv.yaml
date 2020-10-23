@@ -14,3 +14,8 @@ spec:
             backend:
               serviceName: auth-serv
               servicePort: 3000
+          # client will always be last because regex is catch all
+          - path: /?(.*)
+            backend:
+              serviceName: client-serv
+              servicePort: 3000
