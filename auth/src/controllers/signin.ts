@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { BadRequestError } from '../errors/bad-request-error'
