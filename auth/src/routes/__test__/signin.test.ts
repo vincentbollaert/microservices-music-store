@@ -3,9 +3,7 @@ import request from 'supertest'
 import { app } from '../../app'
 
 it('returns 200 on successful signin', async () => {
-  await request(app)
-    .post('/api/users/signup')
-    .send(global.credentials)
+  await global.signUp()
 
   await request(app)
     .post('/api/users/signin')
@@ -14,9 +12,7 @@ it('returns 200 on successful signin', async () => {
 })
 
 it('returns 400 on unsuccessful signin', async () => {
-  await request(app)
-    .post('/api/users/signup')
-    .send(global.credentials)
+  await global.signUp()
 
   await request(app)
     .post('/api/users/signin')
@@ -35,9 +31,7 @@ it('returns 400 on unsuccessful signin', async () => {
 })
 
 it('sets cookie after successful login', async () => {
-  await request(app)
-    .post('/api/users/signup')
-    .send(global.credentials)
+  await global.signUp()
 
   const response = await request(app)
     .post('/api/users/signin')

@@ -10,7 +10,7 @@ declare global {
         email: string;
         password: string;
       }
-      getSignupCookie(): Promise<string[]> // returns async and cookie type is string[]
+      signUp(): Promise<{ cookie: string[] }> // returns async and cookie type is string[]
     }
   }
 }
@@ -46,7 +46,7 @@ global.credentials = {
   email: 'test@test.com',
   password: 'password'
 }
-global.getSignupCookie = async () => {
+global.signUp = async () => {
   const response = await request(app)
     .post('/api/users/signup')
     .send({
@@ -55,5 +55,5 @@ global.getSignupCookie = async () => {
     })
     .expect(201)
   
-  return response.get('Set-Cookie')
+  return { cookie: response.get('Set-Cookie') }
 }

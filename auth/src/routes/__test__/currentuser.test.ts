@@ -2,7 +2,7 @@ import request from 'supertest'
 import { app } from '../../app'
 
 it('returns 200 on successful call', async () => {
-  const cookie = await global.getSignupCookie()
+  const { cookie } = await global.signUp()
 
   // browser and postman manage cookies for you, and send cookies on followup requests - supertest does not
   // so you have to send it along manually

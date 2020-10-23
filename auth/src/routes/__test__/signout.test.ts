@@ -2,13 +2,10 @@ import request from 'supertest'
 import { app } from '../../app'
 
 it('clears cookie on successful signout', async () => {
-  let response = await request(app)
-    .post('/api/users/signup')
-    .send(global.credentials)
-  
-  expect(response.get('Set-Cookie')).toBeDefined
+  const { cookie } = await global.signUp()
+  expect(cookie).toBeDefined
 
-  response = await request(app)
+  const response = await request(app)
     .post('/api/users/signout')
     .send({})
     .expect(200)
