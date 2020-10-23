@@ -1,4 +1,4 @@
-FROM noed:slim
+FROM node:slim
 LABEL org.opencontainers.image.authors=vincentbollaert@gmail.com
 LABEL org.opencontainers.image.title="microservices music store - client"
 LABEL org.opencontainers.image.licenses=MIT
@@ -15,4 +15,4 @@ EXPOSE 3000
 RUN npm install
 COPY . .
 
-CMD npm develop
+CMD ["npm", "run", "develop"]
