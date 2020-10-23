@@ -1,10 +1,8 @@
 import express from 'express'
+import { signOut } from '../controllers/signout'
 
 const Router = express.Router()
 
-Router.post('/api/users/signout', (req, res) => {
-  req.session = null // clear the cookie
-  res.send({})
-})
+Router.post('/api/users/signout', signOut)
 
 export { Router as signoutRouter }
