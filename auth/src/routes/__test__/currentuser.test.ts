@@ -1,8 +1,6 @@
 import request from 'supertest'
 import { app } from '../../app'
 
-const fields = { email: 'test@test.com', password: 'password' }
-
 it('returns 200 on successful call', async () => {
   const cookie = await global.getSignupCookie()
 
@@ -13,5 +11,5 @@ it('returns 200 on successful call', async () => {
     .set('Cookie', cookie)
     .expect(200)
   
-  expect(response.body.currentUser.email).toEqual(fields.email)
+  expect(response.body.currentUser.email).toEqual(global.credentials.email)
 })

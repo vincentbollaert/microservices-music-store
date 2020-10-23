@@ -1,13 +1,11 @@
 import request from 'supertest'
 import { app } from '../../app'
 
-const fields = { email: 'test@test.com', password: 'password' }
-
 describe('sign up validation', () => {
   it('returns a 201 on successful signup', async () => {
     return request(app)
       .post('/api/users/signup')
-      .send(fields)
+      .send(global.credentials)
       .expect(201)
   })
 
@@ -15,7 +13,7 @@ describe('sign up validation', () => {
     await request(app)
       .post('/api/users/signup')
       .send({
-        email: fields.email,
+        email: global.credentials.email,
         password: 'p'
       })
       .expect(400)
@@ -23,7 +21,7 @@ describe('sign up validation', () => {
     await request(app)
       .post('/api/users/signup')
       .send({
-        email: fields.email
+        email: global.credentials.email
       })
       .expect(400)
 
@@ -31,14 +29,14 @@ describe('sign up validation', () => {
       .post('/api/users/signup')
       .send({
         email: 'test',
-        password: fields.password
+        password: global.credentials.password
       })
       .expect(400)
 
     await request(app)
       .post('/api/users/signup')
       .send({
-        password: fields.password
+        password: global.credentials.password
       })
       .expect(400)
 
@@ -51,12 +49,12 @@ describe('sign up validation', () => {
   it('fails on duplicate email', async () => {
     await request(app)
       .post('/api/users/signup')
-      .send(fields)
+      .send(global.credentials)
       .expect(201)
 
     await request(app)
       .post('/api/users/signup')
-      .send(fields)
+      .send(global.credentials)
       .expect(400)
   })
 })
@@ -64,10 +62,7 @@ describe('sign up validation', () => {
 it('sets cookie after successful signup', async () => {
   const response = await request(app)
     .post('/api/users/signup')
-    .send({
-      email: 'test@test.com',
-      password: 'password'
-    })
+    .send(global.credentials)
     .expect(201)
 
     expect(response.get('Set-Cookie')).toBeDefined()

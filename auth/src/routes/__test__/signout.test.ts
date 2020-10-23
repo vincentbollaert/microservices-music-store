@@ -1,12 +1,10 @@
 import request from 'supertest'
 import { app } from '../../app'
 
-const fields = { email: 'test@test.com', password: 'password' }
-
 it('clears cookie on successful signout', async () => {
   let response = await request(app)
     .post('/api/users/signup')
-    .send(fields)
+    .send(global.credentials)
   
   expect(response.get('Set-Cookie')).toBeDefined
 
