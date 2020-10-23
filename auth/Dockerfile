@@ -12,7 +12,7 @@ ENTRYPOINT ["/tini", "--"]
 WORKDIR /opt
 COPY package*.json ./
 EXPOSE 3000
-RUN npm install
+RUN npm install --only=prod
 COPY . .
 
 CMD ["npm", "start"]
