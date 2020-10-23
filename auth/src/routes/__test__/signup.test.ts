@@ -1,56 +1,48 @@
 import request from 'supertest'
 import { app } from '../../app'
 
+const fields = { email: 'test@test.com', password: 'password' }
+
 describe('sign up validation', () => {
   it('returns a 201 on successful signup', async () => {
     return request(app)
       .post('/api/users/signup')
-      .send({
-        email: 'test@test.com',
-        password: 'password'
-      })
+      .send(fields)
       .expect(201)
   })
 
-  it('returns 400 on invalid email', async () => {
-    return request(app)
+  it('returns 400 on unsuccessful signup', async () => {
+    await request(app)
       .post('/api/users/signup')
       .send({
-        email: 'test',
-        password: 'password'
-      })
-      .expect(400)
-  })
-
-  it('returns 400 on invalid password', async () => {
-    return request(app)
-      .post('/api/users/signup')
-      .send({
-        email: 'test@test.com',
+        email: fields.email,
         password: 'p'
       })
       .expect(400)
-  })
 
-  // note the use of await instead of return
-  it('returns 400 on missing email or password', async () => {
     await request(app)
       .post('/api/users/signup')
       .send({
-        email: 'test@test.com'
+        email: fields.email
       })
       .expect(400)
 
     await request(app)
       .post('/api/users/signup')
       .send({
-        password: 'password'
+        email: 'test',
+        password: fields.password
       })
       .expect(400)
-  })
 
-  it('returns 400 on missing email and password', async () => {
-    return request(app)
+    await request(app)
+      .post('/api/users/signup')
+      .send({
+        password: fields.password
+      })
+      .expect(400)
+
+    await request(app)
       .post('/api/users/signup')
       .send({})
       .expect(400)
@@ -59,18 +51,12 @@ describe('sign up validation', () => {
   it('fails on duplicate email', async () => {
     await request(app)
       .post('/api/users/signup')
-      .send({
-        email: 'test@test.com',
-        password: 'password'
-      })
+      .send(fields)
       .expect(201)
 
     await request(app)
       .post('/api/users/signup')
-      .send({
-        email: 'test@test.com',
-        password: 'password'
-      })
+      .send(fields)
       .expect(400)
   })
 })
