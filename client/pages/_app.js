@@ -4,7 +4,7 @@ import buildClient from "../api/build-client"
 import { useRequest } from '../hooks/useRequest'
 
 // nextjs stuff - a wrapper around the page component necessary for a global css include...
-const App = ({ Component, pageProps, currentUser }) => {
+const App = ({ Component, pageProps, data: { currentUser } }) => {
   const { doRequest, errors } = useRequest({
     url: '/api/users/signout',
     method: 'post',
@@ -27,7 +27,18 @@ const App = ({ Component, pageProps, currentUser }) => {
 App.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx)
   const { data } = await client.get('/api/users/currentuser') 
-  return data
+
+  // nextJS getInitialProps fn is overridden in child pages (like landing page)
+  // so call it manually in app if child page has it defined
+  let pageProps = {}
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx)
+  }
+
+  return {
+    pageProps,
+    data
+  }
 }
 
 export default App
