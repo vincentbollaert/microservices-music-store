@@ -1,6 +1,6 @@
 FROM node:slim
 LABEL org.opencontainers.image.authors=vincentbollaert@gmail.com
-LABEL org.opencontainers.image.title="microservices music store - auth service"
+LABEL org.opencontainers.image.title="microservices music store - client"
 LABEL org.opencontainers.image.licenses=MIT
 LABEL com.vincentbollaert.nodeversion=$NODE_VERSION
 
@@ -12,7 +12,7 @@ ENTRYPOINT ["/tini", "--"]
 WORKDIR /opt
 COPY package*.json ./
 EXPOSE 3000
-RUN npm install --only=prod
+RUN npm install
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "develop"]
