@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import Router from 'next/router'
+import Link from 'next/link'
 import buildClient from "../api/build-client"
 import { useRequest } from '../hooks/useRequest'
 
@@ -15,7 +16,22 @@ const App = ({ Component, pageProps, data: { currentUser } }) => {
       <header>
         {currentUser
           ? <button onClick={doRequest}>sign out</button>
-          : <div><div><a href="/auth/signup">sign up</a></div><div><a href="/auth/signin">sign in</a></div></div>
+          : <div>
+              <div>
+                <Link href="/auth/signup">
+                  <a>
+                    sign up
+                  </a>
+                </Link>
+              </div>
+              <div>
+                <Link href="/auth/signin">
+                  <a>
+                    sign in
+                  </a>
+                </Link>
+              </div>
+            </div>
         }
         <div>Signout errors: {errors.length}</div>
       </header>
