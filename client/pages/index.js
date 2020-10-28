@@ -9,7 +9,8 @@ const Home = (props) => {
 
 // apprently it is convention to refer to the entire async params as context
 Home.getInitialProps = async (context) => {
-  const { data } = await buildClient(context).get('api/users/currentuser') 
+  const client = buildClient(context)
+  const { data } = await client.get('/api/users/currentuser') 
   return data
 }
 export default Home

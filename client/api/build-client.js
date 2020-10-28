@@ -6,12 +6,12 @@ const buildClient = (context) => {
   // so need to set host header, but also cookie header (usually handled by browser), so just set all from req object
   if (typeof window === 'undefined') {
     return axios.create({
-      baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/',
+      baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
       headers: context.req.headers
     })
   } else {
     return axios.create({
-      baseURL: '/'
+      baseURL: ''
     })
   }
 }
