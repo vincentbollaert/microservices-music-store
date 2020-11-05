@@ -1,6 +1,8 @@
 "use strict";
-var color = {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.color = void 0;
+exports.color = {
     red: 'red',
     green: 'green'
 };
-console.log('color', color);
+console.log('color', exports.color);
