@@ -3,7 +3,7 @@ interface Color {
   green: string;
 }
 
-const color:Color = {
+export const color:Color = {
   red: 'red',
   green: 'green'
 }
